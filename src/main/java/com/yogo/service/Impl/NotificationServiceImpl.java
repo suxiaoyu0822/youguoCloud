@@ -1,0 +1,61 @@
+package com.yogo.service.Impl;
+
+import com.yogo.dao.NotificationMapper;
+import com.yogo.entity.Notification;
+import com.yogo.entity.NotificationExample;
+import com.yogo.service.NotificationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by Administrator on 2017/7/12.
+ */
+@Service
+public class NotificationServiceImpl implements NotificationService {
+
+    @Autowired
+    private NotificationMapper notificationMapper;
+
+    @Transactional
+    public int insertNotificationService(int ntId,int notId,int objectId, String content) {
+        Notification notification = new Notification();
+        notification.setNtId(ntId);
+        notification.setNotId(notId);
+        notification.setObjectId(objectId);
+        notification.setContent(content);
+        notification.setTime(new java.util.Date().getTime());
+        return notificationMapper.insertSelective(notification);
+    }
+
+    @Transactional
+    public List<Notification> selectAllNotification() {
+        NotificationExample example = new NotificationExample();
+        List<Notification> list = notificationMapper.selectByExample(example);
+        if(list.size() == 0 || list == null){
+            return null;
+        }
+        return list;
+    }
+
+    public int deleteById(int id) {
+        NotificationExample example = new NotificationExample();
+        NotificationExample.Criteria criteria = example.createCriteria();
+        criteria.andNotificationIdEqualTo(id);
+        return notificationMapper.deleteByExample(example);
+    }
+
+    @Transactional
+    public List<Notification> searchByType(int ntId, int notId) {
+        NotificationExample example = new NotificationExample();
+        NotificationExample.Criteria criteria = example.createCriteria();
+        if (ntId!=0){
+            criteria.andNtIdEqualTo(ntId);
+        }if (notId!=0){
+            criteria.andNotIdEqualTo(notId);
+        }
+        return notificationMapper.selectByExample(example);
+    }
+}
