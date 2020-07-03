@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yogo.bean.Message;
 import com.yogo.bean.ServiceChat;
-import com.yogo.conversation.ClientWS;
+import com.yogo.conversation.ws.ClientWS;
 import com.yogo.conversation.WebSocket;
 import com.yogo.service.ChatLogService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -21,6 +21,7 @@ public class Trie {
         this.root = new TrieNode();
         this.root.wordEnd = false;
         for (Keyword keyword : list){
+            System.out.println("keyword:"+keyword.toString());
             insert(keyword.getValue(), keyword.getKeywordId());
         }
     }

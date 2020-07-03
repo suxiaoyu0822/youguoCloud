@@ -38,6 +38,7 @@ public class ServiceWS implements WebSocket {
 
 	@OnOpen
 	public void onOpen(Session session){
+		System.out.println("客服握哈手");
 		this.session = session;
 		wsVector.add(this);
 	}

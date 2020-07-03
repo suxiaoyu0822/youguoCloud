@@ -180,14 +180,15 @@ class VueChatMessage {
 }
 
 let conversationList = [];
-conversationList.push(new Conversation(1, 1, [
-	new VueChatMessage(1, false, new Date(), 0, 'hello'),
-	new VueChatMessage(1, false, new Date(), 0, '在吗？'),
-	new VueChatMessage(4, true, new Date(), 0, '在的，我是客服人员，请问您有什么问题需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？'),
-	new VueChatMessage(1, false, new Date(), 0, '在吗？'),
-	new VueChatMessage(4, true, new Date(), 0, '<p>haha</p><p>lala</p>'),
-]));
-conversationList.push(new Conversation(2, 2, []));
+// conversationList.push(new Conversation(1, 1, [
+// 	new VueChatMessage(1, false, new Date(), 0, 'hello'),
+// 	new VueChatMessage(1, false, new Date(), 0, '在吗？'),
+// 	new VueChatMessage(258, false, new Date(), 0, '在吗？'),
+// 	new VueChatMessage(4, true, new Date(), 0, '在的，我是客服人员，请问您有什么问题需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？'),
+// 	new VueChatMessage(1, false, new Date(), 0, '在吗？'),
+// 	new VueChatMessage(4, true, new Date(), 0, '<p>haha</p><p>lala</p>'),
+// ]));
+// conversationList.push(new Conversation(2, 2, []));
 
 let chatApp = new Vue({
 	el: '#chatApp',

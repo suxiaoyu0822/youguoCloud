@@ -3,8 +3,8 @@ package com.yogo.service.resolver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yogo.bean.*;
-import com.yogo.conversation.ServiceWS;
 import com.yogo.conversation.WebSocket;
+import com.yogo.conversation.ws.ServiceWS;
 import com.yogo.dao.ConversationMapper;
 import com.yogo.entity.ChatLog;
 import com.yogo.entity.CustomerService;
@@ -74,11 +74,17 @@ public class ClientChatResolver implements ContentResolver {
         message.getContent().setTime(new Date().getTime());
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
+        System.out.println("wwwwwwwwwwwwwwwww"+webSocket.getServiceId());
+
+        webSocket.setServiceId(6);
+
         CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(webSocket.getServiceId());
         System.out.println("!!2");
         //判断目标客服是否在线
         Map<String, String> onlineServiceMap = onlineService.getMap();
+        System.out.println("是否在线："+onlineServiceMap.toString());
         boolean targetIsOnline = false;
+        System.out.println("kkkkkkkkkkkkkkk"+customerService.toString());
         for (String s : onlineServiceMap.keySet()){
             if (customerService.getEmployeeId().equals(onlineServiceMap.get(s))){
                 targetIsOnline = true;
@@ -117,6 +123,7 @@ public class ClientChatResolver implements ContentResolver {
                 //如果该消息是发送给客服人员的
                 System.out.println("1.1!!");
                 //给客服人员推荐标签
+                System.out.println("0000000000000000"+clientChat.toString());
                 this.recommandTags(webSocket,clientChat.getConversationId(),clientChat.getContent());
                 System.out.println("1.2!!");
                 List<Knowledge> knowledgeList = knowledgeService.getKnowledgeByContent(clientChat.getContent());
@@ -126,7 +133,9 @@ public class ClientChatResolver implements ContentResolver {
                 try {
                     session.getBasicRemote().sendText(gson.toJson(message));
                     System.out.println("1.5!!");
+                    System.out.println(ServiceWS.wsVector.size());
                     for (WebSocket sws : ServiceWS.wsVector){
+                        System.out.println("UUUUUUUUUUUUUUUUUU"+sws.getServiceId());
                         if (sws.getServiceId() == webSocket.getServiceId()){
                             sws.getSession().getBasicRemote().sendText(gson.toJson(message));
                             sws.getSession().getBasicRemote().sendText(gson.toJson(res));

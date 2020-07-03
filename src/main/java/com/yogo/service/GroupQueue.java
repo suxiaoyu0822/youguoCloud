@@ -3,7 +3,7 @@ package com.yogo.service;
 import com.google.gson.Gson;
 import com.yogo.bean.Message;
 import com.yogo.bean.ServiceStatus;
-import com.yogo.conversation.ServiceWS;
+import com.yogo.conversation.ws.ServiceWS;
 import com.yogo.conversation.WebSocket;
 import com.yogo.entity.Client;
 import com.yogo.entity.ServiceGroup;

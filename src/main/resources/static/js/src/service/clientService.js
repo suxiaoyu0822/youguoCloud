@@ -67,8 +67,11 @@ let MControl = {
 	handleSet: {},
 	handle: function (msg) {
 		let obj = JSON.parse(msg);
+		console.log("开始接值##################：",obj)
 		obj.type = obj.type[0].toUpperCase() + obj.type.substring(1);
 		if (!!this.handleSet[obj.type]) {
+			console.log("type:::::::",obj.type)
+			console.log("content:::::::",obj.content)
 			return this.handleSet[obj.type](obj.content);
 		} else {
 			console.log('Error: Cannot find handle for type:"' + obj.type + '"');
@@ -82,10 +85,11 @@ webSocket.onerror = function () {
 	console.log("ERROR!");
 };
 webSocket.onopen = function () {
-	console.log("Link established.");
+	console.log("111111111111Link established.");
 	establishedConnectionCallback();
 };
 webSocket.onmessage = (event) => {
+	console.log("2222222222222");
 	console.log(event.data);
 	MControl.handle(event.data);
 };
@@ -226,14 +230,15 @@ class VueChatMessage {
 let clientDetailManager = {};
 
 let conversationList = [];
-/*conversationList.push(new Conversation(1, 1, [
-	new VueChatMessage(1, 1, new Date(), 0, 'hello'),
-	new VueChatMessage(1, 1, new Date(), 0, '在吗？'),
-	new VueChatMessage(4, 0, new Date(), 0, '在的，我是客服人员，请问您有什么<span class="x1">问题需要</span>咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？'),
-	new VueChatMessage(1, 1, new Date(), 0, '在吗？'),
-	new VueChatMessage(4, 0, new Date(), 0, '<p>haha</p><p>lala</p>'),
-]));
-conversationList.push(new Conversation(2, 2, []));*/
+// conversationList.push(new Conversation(1, 1, [
+// 	new VueChatMessage(1, 1, new Date(), 0, 'hello'),
+// 	new VueChatMessage(1, 1, new Date(), 0, '在吗？'),
+// 	new VueChatMessage(258, 1, new Date(), 0, '在吗？'),
+// 	new VueChatMessage(4, 0, new Date(), 0, '在的，我是客服人员，请问您有什么<span class="x1">问题需要</span>咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？需要咨询的吗？'),
+// 	new VueChatMessage(1, 1, new Date(), 0, '在吗？'),
+// 	new VueChatMessage(4, 0, new Date(), 0, '<p>haha</p><p>lala</p>'),
+// ]));
+// conversationList.push(new Conversation(2, 2, []));
 let FLAG_UPDATE_KNOWLEDGE = false;
 let FLAG_UPDATE_CHAT = false;
 let chatApp = new Vue({

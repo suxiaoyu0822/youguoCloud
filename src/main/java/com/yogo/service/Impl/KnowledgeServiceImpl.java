@@ -87,6 +87,8 @@ public class KnowledgeServiceImpl implements KnowledgeService {
      */
     @Transactional
     public List<Knowledge> getKnowledgeByContent(String content) {
+        System.out.println("66666666666根据内容反馈知识库");
+        System.out.println(keywordMapper.selectAll().toString());
         Trie trie = new Trie(keywordMapper.selectAll());
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, List<Keyword>> map = new HashMap<Knowledge, List<Keyword>>();
@@ -116,6 +118,7 @@ public class KnowledgeServiceImpl implements KnowledgeService {
      */
     @Transactional
     public Message<RobotChat> getRobotChat(String content) {
+        System.out.println("根据客户提问，机器人作出回答并关联推送");
         Trie trie = new Trie(keywordMapper.selectAll());
         List<Keyword> found = KeywordFinder.findKeywordInContent(content, trie);
         Map<Knowledge, Integer> map = new HashMap<Knowledge, Integer>();

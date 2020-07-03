@@ -3,7 +3,7 @@ package com.yogo.service.resolver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yogo.bean.*;
-import com.yogo.conversation.ClientWS;
+import com.yogo.conversation.ws.ClientWS;
 import com.yogo.conversation.WebSocket;
 import com.yogo.dao.ConversationMapper;
 import org.springframework.beans.factory.annotation.Autowired;

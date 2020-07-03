@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.yogo.bean.ConversationEndSignal;
 import com.yogo.bean.Message;
 import com.yogo.bean.ServiceStatus;
-import com.yogo.conversation.ServiceWS;
 import com.yogo.conversation.WebSocket;
 import com.yogo.dao.ConversationMapper;
 import com.yogo.service.ConversationService;
@@ -46,7 +45,7 @@ public class ClientWS implements WebSocket {
 
 	@OnOpen
 	public void onOpen(Session session){
-		System.out.println("!!!open" +session);
+		System.out.println("客户握哈手");
 		this.session = session;
 		wsVector.add(this);
 
@@ -73,7 +72,7 @@ public class ClientWS implements WebSocket {
 		int conversationId = conversationService.getLastIdByClientId(clientId);
 		conversationService.endConversation(conversationId, new Date().getTime(), null);
 		//给客服发会话结束信号
-		for (WebSocket sws : com.yogo.conversation.ServiceWS.wsVector){
+		for (WebSocket sws : ServiceWS.wsVector){
 			if (sws.getServiceId() == serviceId){
 				try {
 					sws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ConversationEndSignal>(new ConversationEndSignal(conversationId))));

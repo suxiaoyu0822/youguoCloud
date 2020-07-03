@@ -6,7 +6,7 @@ import com.yogo.bean.IdList;
 import com.yogo.bean.Message;
 import com.yogo.bean.NotificationAndTypeAndObjectType;
 import com.yogo.bean.Show;
-import com.yogo.conversation.ServiceWS;
+import com.yogo.conversation.ws.ServiceWS;
 import com.yogo.conversation.WebSocket;
 import com.yogo.entity.CustomerService;
 import com.yogo.entity.Notification;

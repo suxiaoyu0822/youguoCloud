@@ -11,7 +11,7 @@
   <select id="selectByValue" resultType="com.yogo.entity.Keyword">
     select * from keyword where `value`=#{value};
   </select>
-  <select id="selectAll" resultType="com.yogo.entity.Keyword">
+  <select id="selectAll" resultMap="BaseResultMap">
     select * from keyword;
   </select>
   <select id="selectById">
