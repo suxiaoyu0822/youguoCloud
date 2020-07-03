@@ -206,16 +206,16 @@
   <select id="selectAllServerNum" resultType="int">
     SELECT COUNT(*) FROM customer_service;
   </select>
-  <select id="selectNotDimissionPerson" resultType="com.yogo.entity.CustomerService">
+  <select id="selectNotDimissionPerson" resultMap="BaseResultMap">
     SELECT * FROM customer_service WHERE is_dimission = 0;
   </select>
-  <select id="selectBySearchName" parameterType="String" resultType="com.yogo.entity.CustomerService">
+  <select id="selectBySearchName" parameterType="String"  resultMap="BaseResultMap">
     SELECT * FROM customer_service WHERE name LIKE CONCAT('%',#{name},'%' ) OR nickname LIKE CONCAT('%',#{name},'%' );
   </select>
   <update id="updateDimission" parameterType="Integer">
     UPDATE customer_service SET is_dimission = 1 WHERE service_id = #{service_id};
   </update>
-  <select id="selectAllCustom" resultType="com.yogo.entity.CustomerService">
+  <select id="selectAllCustom" resultMap="BaseResultMap">
     SELECT * FROM customer_service;
   </select>
 </mapper>

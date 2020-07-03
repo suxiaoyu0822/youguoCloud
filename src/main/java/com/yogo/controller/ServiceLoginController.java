@@ -44,4 +44,8 @@ public class ServiceLoginController {
         return null;
     }
 
+    @RequestMapping(value = "/index/adminDoLogin", method = {RequestMethod.POST})
+    public String AdminLogin(HttpServletRequest req, HttpServletResponse resp){
+        return "redirect:/admin.html";
+    }
 }

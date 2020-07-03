@@ -33,4 +33,10 @@ public class InitController implements ApplicationListener<ContextRefreshedEvent
         System.out.println("******************客户咨询界面！");
         return "redirect:/customer.html";
     }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String Admin_login(){
+        System.out.println("******************管理员界面！");
+        return "redirect:/admin_login.html";
+    }
 }
