@@ -1,6 +1,7 @@
 package com.yogo.conversation;
 
-import org.springframework.stereotype.Repository;
+
+import org.springframework.stereotype.Component;
 
 import javax.websocket.Session;
 import java.util.Vector;

@@ -57,6 +57,7 @@ public class ServiceLoginResolver implements ContentResolver {
         CustomerService customerService = customerServiceService.selectCustomerServiceByEmployeeId(employeeId);
         System.out.println("3!!!" + customerService);
         webSocket.setServiceId(customerService.getServiceId());
+        System.out.println("客服id注册webSocket："+webSocket.getServiceId());
         String groupName = serviceGroupService.selectGroupByGroupId(customerService.getGroupId()).getName();
         System.out.println("4!!!" + groupName);
         ServiceInfo serviceInfo = new ServiceInfo(customerService.getServiceId(),customerService.getName(),customerService.getNickname(), groupName ,customerService.getEmployeeId(),customerService.getAutoMessage());

@@ -39,7 +39,7 @@ public class ClientWS implements WebSocket {
 
 	private int clientId;
 
-	private int serviceId = 0;
+	private int serviceId;
 
 	private Gson gson = new Gson();
 
@@ -59,8 +59,6 @@ public class ClientWS implements WebSocket {
 		try {
 			resolverFactory.doAction(msgString, this);
 		}catch (Exception e){
-			e.getMessage();
-			e.getLocalizedMessage();
 			e.printStackTrace();
 			System.out.println("onMessage异常================"+e);
 		}

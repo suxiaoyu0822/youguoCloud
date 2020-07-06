@@ -21,7 +21,7 @@ class ClientConnectReq {
 	}
 }
 
-let webSocket=new WebSocket("ws://localhost:8080/ClientWS");
+let webSocket=new WebSocket("ws://192.168.1.119:8081/ClientWS");
 webSocket.onerror=function() {
 	console.log("ERROR!");
 };

@@ -47,7 +47,7 @@ function establishedConnectionCallback() {
 }
 //WS 消息控制开始
 
-let webSocket = new WebSocket("ws://192.168.253.1:8080/ClientWS");
+let webSocket = new WebSocket("ws://192.168.1.119:8081/ClientWS");
 let MControl = {
     ws: webSocket,
     send: function (content) {

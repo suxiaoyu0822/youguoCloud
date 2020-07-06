@@ -20,7 +20,7 @@ public class TTWebSocket {
         try {
 //            client = new WebSocketClient(new URI("ws://121.40.165.18:8800"),new Draft_6455()) {
 //            client = new WebSocketClient(new URI("ws://192.168.1.119:8080/websocket/consumer/null"),new Draft_6455()) {
-            client = new WebSocketClient(new URI("ws://192.168.1.103:8087/ServiceWS"),new Draft_6455()) {
+            client = new WebSocketClient(new URI("ws://192.168.1.119:8081/ServiceWS"),new Draft_6455()) {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
                     System.out.println("握手成功");

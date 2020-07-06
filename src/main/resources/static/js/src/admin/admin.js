@@ -1,4 +1,4 @@
-var ip = "http://localhost:8087/";
+var ip = "http://192.168.1.119:8081/";
 var ends = "";
 //var ip = "test/"
 //var ends = ".json";

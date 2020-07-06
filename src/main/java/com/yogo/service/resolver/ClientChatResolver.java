@@ -65,9 +65,9 @@ public class ClientChatResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
-        System.out.println("!!1" +msgJson + webSocket.getServiceId() +webSocket.getClientId());
+        System.out.println("!!1" +msgJson + "getServiceid:"+webSocket.getServiceId() +"getClientid:"+webSocket.getClientId());
         Session session = webSocket.getSession();
-        System.out.println(chatLogService.getByClientId(1));
+        System.out.println("煤球用："+chatLogService.getByClientId(1));
         Type objectType = new TypeToken<Message<ClientChat>>(){}.getType();
         Message<ClientChat> message = gson.fromJson(msgJson, objectType);
         System.out.println("++++++++++++++++++++++"+message.getContent().toString());
@@ -75,17 +75,17 @@ public class ClientChatResolver implements ContentResolver {
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
         System.out.println("wwwwwwwwwwwwwwwww"+webSocket.getServiceId());
-
-        webSocket.setServiceId(6);
-
-        CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(webSocket.getServiceId());
+        CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(1);
         System.out.println("!!2");
         //判断目标客服是否在线
         Map<String, String> onlineServiceMap = onlineService.getMap();
         System.out.println("是否在线："+onlineServiceMap.toString());
         boolean targetIsOnline = false;
-        System.out.println("kkkkkkkkkkkkkkk"+customerService.toString());
+//        System.out.println("kkkkkkkkkkkkkkk"+customerService.toString());
         for (String s : onlineServiceMap.keySet()){
+            System.out.println("111111111111111"+s);
+            System.out.println("222222222222222"+customerService.getEmployeeId());
+            System.out.println("333333333333333"+onlineServiceMap.get(s));
             if (customerService.getEmployeeId().equals(onlineServiceMap.get(s))){
                 targetIsOnline = true;
             }
@@ -151,6 +151,7 @@ public class ClientChatResolver implements ContentResolver {
     private void transfer(WebSocket webSocket, ClientChat clientChat){
         System.out.println("7");
         System.out.println("8");
+        System.out.println("找到的ClientId："+clientChat.getClientId());
         CustomerService target = conversationService.getLastChatServiceId(clientChat.getClientId());
         System.out.println("找到客服：" + target);
         System.out.println("9");
@@ -165,6 +166,7 @@ public class ClientChatResolver implements ContentResolver {
             }
         }
         if (targetWS != null){//如果存在之前聊过天的客服，则接入到该客服
+            System.out.println("有聊过的客服！！！！！！！");
             conversationService.resetServiceId(target.getServiceId(), clientChat.getConversationId());
             Message<ServiceChat> message =
                     new Message<ServiceChat>(new ServiceChat(clientChat.getConversationId(),clientChat.getClientId(),0, target.getAutoMessage(),new Date().getTime(), target.getServiceId()));
@@ -188,6 +190,7 @@ public class ClientChatResolver implements ContentResolver {
                 e.printStackTrace();
             }
         } else {
+            System.out.println("没有聊过的客服！！！！！！！");
             List<ChatLog> chatLogList = chatLogService.getClientSayByConversationId(clientChat.getConversationId());
             String content = "";
             for (ChatLog c : chatLogList){

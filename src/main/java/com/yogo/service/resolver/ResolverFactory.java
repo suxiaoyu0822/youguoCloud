@@ -30,6 +30,7 @@ public class ResolverFactory implements ApplicationContextAware {
 
     public void doAction(String msgJson, WebSocket webSocket){
 //        System.out.println("doAction");
+        System.out.println("ServiceId:"+webSocket.getServiceId());
         Gson gson = new Gson();
         Message message = gson.fromJson(msgJson, Message.class);
         String type = message.getType() + "Resolver";
