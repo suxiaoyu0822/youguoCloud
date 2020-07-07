@@ -19,10 +19,11 @@ import java.util.Date;
 import java.util.Vector;
 
 @ServerEndpoint(value = "/ClientWS")
-@Component
 public class ClientWS implements WebSocket {
 
 	private ResolverFactory resolverFactory = new ResolverFactory();
+//	@Autowired
+//	private ResolverFactory resolverFactory;
 
 	@Autowired
 	private ConversationService conversationService;

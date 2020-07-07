@@ -130,9 +130,9 @@ MControl.addHandle('SearchClientByNameResp',function(resp){
 });
 
 MControl.addHandle('RecommandTags',function(recommand){
-	console.log("5555555555",recommand.conversationId)
+	// console.log("5555555555",recommand.conversationId)
 	let conversation = conversationList.find(cco => cco.conversationId == recommand.conversationId);
-	console.log("99999999999999",conversation)
+	// console.log("99999999999999",conversation)
 	let clientId = conversation.userId;
 	let tagList = chatApp.clientDetailManager[clientId].unusedTagList;
 	for(let tag of recommand.tagList){

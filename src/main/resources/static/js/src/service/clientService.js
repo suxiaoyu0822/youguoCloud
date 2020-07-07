@@ -70,8 +70,8 @@ let MControl = {
 		console.log("开始接值##################：",obj)
 		obj.type = obj.type[0].toUpperCase() + obj.type.substring(1);
 		if (!!this.handleSet[obj.type]) {
-			console.log("type:::::::",obj.type)
-			console.log("content:::::::",obj.content)
+			// console.log("type:::::::",obj.type)
+			// console.log("content:::::::",obj.content)
 			return this.handleSet[obj.type](obj.content);
 		} else {
 			console.log('Error: Cannot find handle for type:"' + obj.type + '"');

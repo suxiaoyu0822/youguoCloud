@@ -8,6 +8,7 @@ import com.yogo.service.WorkTimeService;
 import com.yogo.service.resolver.ResolverFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -23,10 +24,14 @@ public class ServiceWS implements WebSocket {
 	@Autowired
 	private ConversationService conversationService;
 
+
 	private ResolverFactory resolverFactory = new ResolverFactory();
+//	@Autowired
+//	private ResolverFactory resolverFactory;
 
 	@Autowired
 	private ServiceGroupPeople serviceGroupPeople;
+
 
 	public static Vector<WebSocket> wsVector = new Vector<WebSocket>();
 
@@ -50,6 +55,7 @@ public class ServiceWS implements WebSocket {
 		try {
 			resolverFactory.doAction(msgString, this);
 		}catch (Exception e){
+			e.printStackTrace();
 			System.out.println("================"+e);
 		}
 	}

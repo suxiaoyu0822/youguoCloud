@@ -55,8 +55,7 @@ public class UserInfoReqResolver implements ContentResolver {
             }
         } else {
             System.out.println("&&&&&&&&&&&&&&&&&&&userId:"+userId);
-            userId = 1;
-            CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(userId);
+            CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(1);
             System.out.println(customerService.toString());
             nickName = customerService.getName();
         }

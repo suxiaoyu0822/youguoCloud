@@ -8,6 +8,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +16,21 @@ import org.springframework.stereotype.Service;
  * Created by Lee on 2017/7/12.
  */
 @Service
-@Component
 public class ResolverFactory implements ApplicationContextAware {
     public ResolverFactory() {
-        System.out.println("初始化对象");
+        super();
     }
 
     @Autowired
-    private ApplicationContext applicationContext;
+    private static ApplicationContext applicationContext;
 
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+    //获取applicationContext
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 
     public void doAction(String msgJson, WebSocket webSocket){
@@ -35,7 +40,10 @@ public class ResolverFactory implements ApplicationContextAware {
         Message message = gson.fromJson(msgJson, Message.class);
         String type = message.getType() + "Resolver";
         System.out.println(type);
-        ((ContentResolver)SpringUtil.getBean(type)).resolve(msgJson, webSocket);
+        ((ContentResolver)ResolverFactory.getApplicationContext().getBean(type)).resolve(msgJson, webSocket);
+//        ((ContentResolver)SpringUtil.getBean(type)).resolve(msgJson, webSocket);
 
     }
+
+
 }
