@@ -1,6 +1,5 @@
 package com.yogo.conversation.ws;
 
-import com.google.gson.Gson;
 import com.yogo.conversation.WebSocket;
 import com.yogo.service.ConversationService;
 import com.yogo.service.ServiceGroupPeople;
@@ -8,8 +7,6 @@ import com.yogo.service.WorkTimeService;
 import com.yogo.service.resolver.ResolverFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.Vector;
@@ -18,28 +15,37 @@ import java.util.Vector;
 @Component
 public class ServiceWS implements WebSocket {
 
+	private static WorkTimeService workTimeService;
 	@Autowired
-	private WorkTimeService workTimeService;
+	public void setWorkTimeService(WorkTimeService workTimeService) {
+		this.workTimeService = workTimeService;
+	}
 
+	private static ConversationService conversationService;
 	@Autowired
-	private ConversationService conversationService;
+	public void setConversationService(ConversationService conversationService) {
+		this.conversationService = conversationService;
+	}
 
-
-	private ResolverFactory resolverFactory = new ResolverFactory();
-//	@Autowired
-//	private ResolverFactory resolverFactory;
-
+	private static ResolverFactory resolverFactory;
 	@Autowired
-	private ServiceGroupPeople serviceGroupPeople;
+	public void setResolverFactory(ResolverFactory resolverFactory){
+		this.resolverFactory = resolverFactory;
+	}
 
+	private static ServiceGroupPeople serviceGroupPeople;
+	@Autowired
+	public void setServiceGroupPeople(ServiceGroupPeople serviceGroupPeople) {
+		this.serviceGroupPeople = serviceGroupPeople;
+	}
 
 	public static Vector<WebSocket> wsVector = new Vector<WebSocket>();
 
-	private Session session;
+	private static Session session;
 
-	private int clientId;
+	private static int clientId;
 
-	private int serviceId;
+	private static int serviceId;
 
 	@OnOpen
 	public void onOpen(Session session){
@@ -51,7 +57,6 @@ public class ServiceWS implements WebSocket {
 	@OnMessage
 	public void onMessage(String msgString){
 		System.out.println("收到消息" + msgString);
-		Gson gson = new Gson();
 		try {
 			resolverFactory.doAction(msgString, this);
 		}catch (Exception e){
@@ -72,32 +77,39 @@ public class ServiceWS implements WebSocket {
 	@OnClose
 	public void onClose(){
 		System.out.println("Service close");
+		System.out.println("ServiceId:"+serviceId);
 		workTimeService.offline(serviceId);
 		conversationService.finishAllByServiceId(serviceId);
 		wsVector.remove(this);
 		serviceGroupPeople.quit(serviceId);
 	}
 
-	public Vector<WebSocket> getWsVector() {
-		return wsVector;
-	}
-
+	@Override
 	public Session getSession() {
 		return session;
 	}
 
+	@Override
+	public Vector<WebSocket> getWsVector() {
+		return wsVector;
+	}
+
+	@Override
 	public int getClientId() {
 		return clientId;
 	}
 
-	public int getServiceId() {
-		return serviceId;
-	}
-
+	@Override
 	public void setClientId(int clientId) {
 		this.clientId = clientId;
 	}
 
+	@Override
+	public int getServiceId() {
+		return serviceId;
+	}
+
+	@Override
 	public void setServiceId(int serviceId) {
 		this.serviceId = serviceId;
 	}

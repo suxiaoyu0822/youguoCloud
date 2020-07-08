@@ -74,20 +74,21 @@ public class ClientChatResolver implements ContentResolver {
         message.getContent().setTime(new Date().getTime());
         ClientChat clientChat = message.getContent();
         int contentType = clientChat.getContentType();
-        System.out.println("wwwwwwwwwwwwwwwww"+webSocket.getServiceId());
-        CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(1);
+        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"+webSocket.getServiceId());
+        CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(webSocket.getServiceId());
         System.out.println("!!2");
         //判断目标客服是否在线
         Map<String, String> onlineServiceMap = onlineService.getMap();
         System.out.println("是否在线："+onlineServiceMap.toString());
         boolean targetIsOnline = false;
-//        System.out.println("kkkkkkkkkkkkkkk"+customerService.toString());
         for (String s : onlineServiceMap.keySet()){
             System.out.println("111111111111111"+s);
-            System.out.println("222222222222222"+customerService.getEmployeeId());
+            System.out.println("111111111111111"+customerService);
             System.out.println("333333333333333"+onlineServiceMap.get(s));
-            if (customerService.getEmployeeId().equals(onlineServiceMap.get(s))){
-                targetIsOnline = true;
+            if (customerService!=null){
+                if (customerService.getEmployeeId().equals(onlineServiceMap.get(s))){
+                    targetIsOnline = true;
+                }
             }
         }
         if (!targetIsOnline){
@@ -158,8 +159,11 @@ public class ClientChatResolver implements ContentResolver {
         //找之前聊过天的客服
         WebSocket targetWS = null;
         if (target != null){
+            System.out.println("wsVector:"+ServiceWS.wsVector.size());
             for (int i = 0; i < ServiceWS.wsVector.size(); i++){
                 System.out.println("cnt1");
+                System.out.println("cnt2"+ServiceWS.wsVector.get(i).getServiceId());
+                System.out.println("cnt3"+target.getServiceId());
                 if (ServiceWS.wsVector.get(i).getServiceId() == target.getServiceId()){
                     targetWS = ServiceWS.wsVector.get(i);
                 }

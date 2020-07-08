@@ -33,10 +33,15 @@ public class ServiceGroupPeople {
     }
 
     public void quit(int serviceId){
+//        System.out.println("group:"+group.values());
         for (List<Integer> list : group.values()){
             for (int i : list){
+//                System.out.println("iiiiiiiiiiiiiii"+i);
                 if (i == serviceId){
                     list.remove(new Integer(i));
+                    if (list.size()<=0){
+                        break;
+                    }
                 }
             }
         }

@@ -1,10 +1,11 @@
 package com;
 
+import com.yogo.service.resolver.ResolverFactory;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -13,7 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class DemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+//        SpringApplication.run(DemoApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
+        //解决websocket不能注入bean的问题
+        ResolverFactory.setApplicationContext(applicationContext);
 
     }
     /**

@@ -19,28 +19,40 @@ import java.util.Date;
 import java.util.Vector;
 
 @ServerEndpoint(value = "/ClientWS")
+@Component
 public class ClientWS implements WebSocket {
 
-	private ResolverFactory resolverFactory = new ResolverFactory();
-//	@Autowired
-//	private ResolverFactory resolverFactory;
-
+	private static ResolverFactory resolverFactory;
 	@Autowired
-	private ConversationService conversationService;
+	public void setResolverFactory(ResolverFactory resolverFactory){
+		this.resolverFactory = resolverFactory;
+	}
 
+	private static ConversationService conversationService;
 	@Autowired
-	private ConversationMapper conversationMapper;
+	public void setConversationService(ConversationService conversationService) {
+		this.conversationService = conversationService;
+	}
 
+	private static ConversationMapper conversationMapper;
 	@Autowired
-	private GroupQueue groupQueue;
+	public void setConversationMapper(ConversationMapper conversationMapper) {
+		this.conversationMapper = conversationMapper;
+	}
 
-	private Session session;
+	private static GroupQueue groupQueue;
+	@Autowired
+	public void setGroupQueue(GroupQueue groupQueue) {
+		this.groupQueue = groupQueue;
+	}
 
 	public static Vector<WebSocket> wsVector = new Vector<WebSocket>();
 
-	private int clientId;
+	private static Session session;
 
-	private int serviceId;
+	private static int clientId;
+
+	private static int serviceId;
 
 	private Gson gson = new Gson();
 
@@ -90,6 +102,7 @@ public class ClientWS implements WebSocket {
 	@OnError
 	public void onError(Throwable t){
 		System.out.println(t.getCause() + "!!!error");
+		System.out.println("onError clientId:"+clientId);
 		int conversationId = conversationService.getLastIdByClientId(clientId);
 		conversationService.endConversation(conversationId, new Date().getTime(), null);
 		//给客服发会话结束信号
@@ -109,31 +122,33 @@ public class ClientWS implements WebSocket {
 		wsVector.remove(this);
 	}
 
-	public int getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
-	}
-
-	public int getServiceId() {
-		return serviceId;
-	}
-
-	public void setServiceId(int serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public ResolverFactory getResolverFactory() {
-		return resolverFactory;
-	}
-
+	@Override
 	public Session getSession() {
 		return session;
 	}
 
-	public Vector<WebSocket> getWsVector(){
+	@Override
+	public Vector<WebSocket> getWsVector() {
 		return wsVector;
+	}
+
+	@Override
+	public int getClientId() {
+		return clientId;
+	}
+
+	@Override
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+
+	@Override
+	public int getServiceId() {
+		return serviceId;
+	}
+
+	@Override
+	public void setServiceId(int serviceId) {
+		this.serviceId = serviceId;
 	}
 }

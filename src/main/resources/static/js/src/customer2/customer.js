@@ -120,7 +120,6 @@ webSocket.onopen = function () {
     establishedConnectionCallback();
 };
 webSocket.onmessage = (event) => {
-    console.log(event.data);
     MControl.handle(event.data);
 };
 webSocket.onclose = () => {

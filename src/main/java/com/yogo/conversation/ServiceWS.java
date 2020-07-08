@@ -16,7 +16,8 @@
 ///**
 // * Created by Lee on 2017/7/12.
 // */
-//@ServerEndpoint(value="/ServiceWS", configurator = SpringConfigurator.class)
+//@ServerEndpoint(value="/ServiceWS")
+//@Component
 //public class ServiceWS implements WebSocket {
 //
 //    @Autowired
@@ -25,8 +26,12 @@
 //    @Autowired
 //    private ConversationService conversationService;
 //
-//    @Autowired
 //    private ResolverFactory resolverFactory;
+//    @Autowired
+//	public void setResolverFactory(ResolverFactory resolverFactory){
+//		this.resolverFactory = resolverFactory;
+//	}
+//
 //
 //    @Autowired
 //    private ServiceGroupPeople serviceGroupPeople;

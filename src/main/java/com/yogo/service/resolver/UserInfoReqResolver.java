@@ -45,7 +45,9 @@ public class UserInfoReqResolver implements ContentResolver {
         int userType = userInfoReq.getUserType();
         int userId = userInfoReq.getUserId();
         String nickName;
-        if (userInfoReq.getUserType() == 0){
+        if (userInfoReq.getUserType() == 0){ //userType 0-客户，1-客服
+            System.out.println("×××××××××××××客户请求×××××××××××××");
+            System.out.println("&&&&&&&&&&&&&&&&&&&userId:"+userId);
             Client client = clientService.selectClientByClientId(userId);
             if (client.getName() == null){
                 JoinUp joinUp = joinUpService.getLastByClientId(userId);
@@ -54,9 +56,12 @@ public class UserInfoReqResolver implements ContentResolver {
                 nickName = client.getName();
             }
         } else {
+            System.out.println("×××××××××××××客服请求×××××××××××××");
             System.out.println("&&&&&&&&&&&&&&&&&&&userId:"+userId);
-            CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(1);
-            System.out.println(customerService.toString());
+            if (userId==0){
+                userId = 6;
+            }
+            CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(userId);
             nickName = customerService.getName();
         }
         UserInfoResp userInfoResp = new UserInfoResp(userType, nickName, userId);
