@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.Date;
 
 /**
+ * 转接传输请求解析程序
  * Created by Lee on 2017/7/17.
  */
 @Service
@@ -45,7 +46,9 @@ public class TransferReqResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("----------------------------转接传输请求解析程序----------------------------");
         Session session = webSocket.getSession();
+        System.out.println("接收的消息："+msgJson);
         Type objectType = new TypeToken<Message<TransferReq>>(){}.getType();
         Message<TransferReq> message = gson.fromJson(msgJson, objectType);
         TransferReq transferReq = message.getContent();

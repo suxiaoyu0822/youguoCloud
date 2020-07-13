@@ -17,6 +17,7 @@ import java.lang.reflect.Type;
 import java.util.Date;
 
 /**
+ * 客服聊天解析程序
  * Created by Lee on 2017/7/15.
  */
 @Service
@@ -29,16 +30,15 @@ public class ServiceChatResolver implements ContentResolver{
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
-        System.out.println("serviceChatResolver 1");
+        System.out.println("----------------------------客服聊天解析程序----------------------------");
         Session session = webSocket.getSession();
-        System.out.println("serviceChatResolver 1");
+        System.out.println("接收的消息："+msgJson);
         Type objectType = new TypeToken<Message<ServiceChat>>(){}.getType();
         Message<ServiceChat> message = gson.fromJson(msgJson, objectType);
         message.getContent().setTime(new Date().getTime());
         message.getContent().setServiceId(webSocket.getServiceId());
         ServiceChat serviceChat = message.getContent();
-        System.out.println(message.getContent());
-        System.out.println("serviceChatResolver 3");
+        System.out.println("聊天内容："+message.getContent());
         int contentType = serviceChat.getContentType();
         if (contentType == 0){
             chatLogService.addWithConversationId
@@ -49,7 +49,7 @@ public class ServiceChatResolver implements ContentResolver{
                 for(WebSocket ws : ClientWS.wsVector){
                     if (ws.getClientId() == serviceChat.getClientId()){
                         System.out.println("serviceChatResolver 5" + ws.getClientId());
-                        System.out.println("aaa " + ws.getClientId() + " " +ws.getSession() + " " +ws.getSession().getBasicRemote());
+                        System.out.println("aaa：" + ws.getClientId() + " " +ws.getSession() + " " +ws.getSession().getBasicRemote());
                         ws.getSession().getBasicRemote().sendText(gson.toJson(message));
                         System.out.println("serviceChatResolver 6");
                     }

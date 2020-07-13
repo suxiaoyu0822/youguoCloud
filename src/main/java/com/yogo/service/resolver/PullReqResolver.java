@@ -20,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.Date;
 
 /**
+ * 获取请求解析程序
  * Created by Lee on 2017/7/18.
  */
 @Service
@@ -47,11 +48,14 @@ public class PullReqResolver implements ContentResolver{
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("----------------------------获取请求解析程序----------------------------");
         Session session = webSocket.getSession();
         Type objectType = new TypeToken<Message<PullReq>>(){}.getType();
+        System.out.println("接收到的消息："+msgJson);
         Message<PullReq> message = gson.fromJson(msgJson, objectType);
         PullReq pullReq = message.getContent();
         int serviceId = pullReq.getServiceId();
+        System.out.println("客服id："+serviceId);
         CustomerService customerService = customerServiceService.selectCustomerServiceByServiceId(serviceId);
         int groupId = customerService.getGroupId();
         Client client = groupQueue.getClientFromQueue(groupId);
@@ -64,6 +68,7 @@ public class PullReqResolver implements ContentResolver{
         try {
             session.getBasicRemote().sendText(gson.toJson(new Message<TransferSignal>(transferSignal)));
             //更新接入新会话的客服状态
+            System.out.println("更新接入新会话的客服状态!");
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.setConversationCount(conversationMapper.selectNotFinishByServiceId(serviceId) + 1);
             session.getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));

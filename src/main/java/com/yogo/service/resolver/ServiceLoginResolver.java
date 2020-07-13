@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
+ * 客服登录解析程序
  * Created by Lee on 2017/7/17.
  */
 @Service
@@ -40,12 +41,12 @@ public class ServiceLoginResolver implements ContentResolver {
     private CommonLanguageService commonLanguageService;
 
     public void resolve(String msgJson, WebSocket webSocket) {
-        System.out.println("++++++++++++++++客服会话");
+        System.out.println("----------------------------客服登录解析程序----------------------------");
         Gson gson = new Gson();
+        System.out.println("接收的消息："+msgJson);
         Session session = webSocket.getSession();
         Type objectType = new TypeToken<Message<ServiceLogin>>(){}.getType();
         Message<ServiceLogin> message = gson.fromJson(msgJson, objectType);
-        System.out.println("____________________"+message.getContent().toString());
         ServiceLogin serviceLogin = message.getContent();
         String token = serviceLogin.getToken();
         if (token.startsWith("\"")){

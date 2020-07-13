@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 /**
+ * 解析程序工厂
  * Created by Lee on 2017/7/12.
  */
 @Service
@@ -20,11 +21,11 @@ public class ResolverFactory {
     }
 
     public void doAction(String msgJson, WebSocket webSocket){
-        System.out.println("doAction");
+        System.out.println("----------------------------解析程序工厂----------------------------");
         Gson gson = new Gson();
         Message message = gson.fromJson(msgJson, Message.class);
         String type = message.getType() + "Resolver";
-        System.out.println(type);
+        System.out.println("将要调用的解析程序："+type);
 //        ((ContentResolver)SpringUtil.getBean(type)).resolve(msgJson, webSocket);
         ((ContentResolver)applicationContext.getBean(type)).resolve(msgJson, webSocket);
     }

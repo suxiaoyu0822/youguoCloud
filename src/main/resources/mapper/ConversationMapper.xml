@@ -46,9 +46,23 @@
     update conversation set service_id = #{serviceId} where conversation_id=#{conversationId};
   </update>
   <select id="selectLastChatServiceId" resultType="com.yogo.entity.CustomerService">
-    select customer_service.* from conversation, customer_service
-    where client_id=#{clientId} AND is_dimission=0 AND customer_service.service_id!=0 AND customer_service.service_id=conversation.service_id
-    ORDER BY stop_time DESC limit 0,1;
+   SELECT
+	cs.service_id AS serviceId,
+	cs.NAME AS name,
+	cs.group_id AS groupId,
+	cs.nickname AS nickname,
+	cs.employee_id AS employeeId,
+	cs.auto_message AS autoMessage,
+	cs.is_dimission AS isDimission,
+	cs.PASSWORD AS password
+FROM
+	conversation,
+	customer_service cs
+WHERE
+	client_id = #{clientId} AND is_dimission=0 AND cs.service_id!=0 AND cs.service_id=conversation.service_id
+ORDER BY
+	stop_time DESC
+LIMIT 0,1;
   </select>
   <select id="selectByClientId" resultMap="BaseResultMap">
     select conversation.*, chat_log.* from conversation, chat_log

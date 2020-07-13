@@ -44,8 +44,8 @@ mybatis:
   type-aliases-package: com.yogo.dao
   mapper-locations: classpath:mapper/*.xml
   #configLocation: classpath:mybatis-config.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 #pagehelper

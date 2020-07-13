@@ -58,7 +58,7 @@ public class ClientWS implements WebSocket {
 
 	@OnOpen
 	public void onOpen(Session session){
-		System.out.println("客户握哈手");
+		System.out.println("客户与websocket握哈手");
 		this.session = session;
 		wsVector.add(this);
 
@@ -66,9 +66,8 @@ public class ClientWS implements WebSocket {
 
 	@OnMessage
 	public void onMessage(String msgString) throws Exception {
-		System.out.println("收到消息：" + msgString);
-		System.out.println(session);
-		System.out.println(resolverFactory + "!!");
+		System.out.println("###################客户端websoket#####################");
+		System.out.println("新收到的消息：" + msgString);
 		try {
 			resolverFactory.doAction(msgString, this);
 		}catch (Exception e){

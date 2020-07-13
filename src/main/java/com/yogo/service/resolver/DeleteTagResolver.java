@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Type;
 
 /**
+ * 删除标记解析程序
  * Created by Administrator on 2017/7/17.
  */
 @Service
@@ -27,7 +28,9 @@ public class DeleteTagResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("----------------------------删除标记解析程序----------------------------");
         Gson gson = new Gson();
+        System.out.println("接收的消息："+msgJson);
         Type objectType = new TypeToken<Message<AddTag>>(){}.getType();
         Message<AddTag> message = gson.fromJson(msgJson,objectType);
         AddTag addTag = message.getContent();

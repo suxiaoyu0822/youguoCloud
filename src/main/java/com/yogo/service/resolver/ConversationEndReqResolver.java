@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.Date;
 
 /**
+ * 会话结束请求解析程序
  * Created by Lee on 2017/7/18.
  */
 @Service
@@ -28,6 +29,8 @@ public class ConversationEndReqResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("----------------------------会话结束请求解析程序----------------------------");
+        System.out.println("接收的消息："+msgJson);
         System.out.println("1");
         Session session = webSocket.getSession();
         System.out.println("2" + conversationMapper);

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 更改客户端详细信息解析程序
  * Created by Administrator on 2017/7/16.
  */
 @Service
@@ -33,7 +34,9 @@ public class ChangeClientDetailResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket){
+        System.out.println("----------------------------更改客户端详细信息解析程序----------------------------");
         Session session = webSocket.getSession();
+        System.out.println("接收的消息："+msgJson);
         Gson gson = new Gson();
         Type objectType = new TypeToken<Message<ChangeClientDetail>>(){}.getType();
         Message<ChangeClientDetail> message = gson.fromJson(msgJson,objectType);

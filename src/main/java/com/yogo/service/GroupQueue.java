@@ -59,7 +59,7 @@ public class GroupQueue implements Serializable {
     public int joinLeastClientQueue(int clientId){
         int leastClient = 999999999;
         int groupId = 2;
-        System.out.println(groupQueueMap);
+        System.out.println("groupQueueMap:"+groupQueueMap);
         for (Integer i : groupQueueMap.keySet()){
             if (serviceGroupPeople.groupIsEmpty(i)){
                 continue;
@@ -70,11 +70,11 @@ public class GroupQueue implements Serializable {
                 groupId = i;
             }
         }
-        System.out.println("加入客服组队列" + groupId + groupQueueMap.get(groupId));
+        System.out.println("加入客服组队列:" + groupId + groupQueueMap.get(groupId));
         Queue<Client> queue =  groupQueueMap.get(groupId);
-        System.out.println("队列" + queue.poll());
+        System.out.println("队列:" + queue.poll());
         queue.offer(new Client(clientId));
-        System.out.println("客服队列人数" + groupQueueMap.get(groupId).size());
+        System.out.println("客服队列人数:" + groupQueueMap.get(groupId).size());
         this.updateServiceStatus(groupId, groupQueueMap.get(groupId).size());
         System.out.println("更新客服状态完毕");
         return groupId;
@@ -99,7 +99,7 @@ public class GroupQueue implements Serializable {
         for (WebSocket ws : ServiceWS.wsVector){
             int wsGroupId = customerServiceService.selectCustomerServiceByServiceId(ws.getServiceId()).getGroupId();
             if (wsGroupId == groupId){
-                System.out.println("wsGroupId" + wsGroupId);
+                System.out.println("wsGroupId:" + wsGroupId);
                 try {
                     ws.getSession().getBasicRemote().sendText(gson.toJson(new Message<ServiceStatus>(serviceStatus)));
                 } catch (IOException e) {

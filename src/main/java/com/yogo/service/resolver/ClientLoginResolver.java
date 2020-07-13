@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * 客户端登录解析程序
  * Created by Lee on 2017/7/14.
  */
 @Service
@@ -43,20 +44,22 @@ public class ClientLoginResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
-        System.out.println("resolve");
+        System.out.println("----------------------------客户端登录解析程序----------------------------");
+        System.out.println("接收的消息："+msgJson);
         Session session = webSocket.getSession();
         ConversationStart conversationStart = new ConversationStart();
         Gson gson = new Gson();
         Type type = new  TypeToken<Message<ClientLogin>>(){}.getType();
         Message<ClientLogin> message = gson.fromJson(msgJson, type);
         ClientLogin clientLogin = message.getContent();
-        System.out.println(clientLogin.getClass());
         List<JoinUp> joinUpList = null;
         String account = null;
         int clientId = 0;
         int accessId = clientLogin.getAccessId();
         if (clientLogin.getAccount() != null){
+            System.out.println("Account不为空");
             joinUpList = joinUpService.hasJoinedUp(clientLogin.getAccessId(), clientLogin.getAccount());
+            System.out.println("joinUpList:"+joinUpList);
             if (joinUpList != null){
                 account = joinUpList.get(0).getAccount();
                 clientId = joinUpList.get(0).getClientId();
@@ -64,12 +67,14 @@ public class ClientLoginResolver implements ContentResolver {
                 conversationStart.setChatLogList(chatLogService.getByClientId(clientId));
             }
         } else {
+            System.out.println("Account为空");
             account = getNewAccount(accessId);
             clientId = clientService.insertClient(null, null, null, null, 0);
             joinUpService.addJoinUp(accessId, clientId, new Date().getTime(),account);
         }
         conversationStart.setAccount(account);
         conversationStart.setClientId(clientId);
+        System.out.println("ws serviceid:"+webSocket.getServiceId());
         conversationService.startConversation(clientId, 0, new Date().getTime());
         conversationStart.setConversationId(conversationService.getLastIdByClientId(clientId));
         Message<ConversationStart> ret = new Message<ConversationStart>(conversationStart);

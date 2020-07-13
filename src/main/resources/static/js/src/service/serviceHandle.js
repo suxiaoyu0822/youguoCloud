@@ -55,7 +55,7 @@ MControl.addHandle('ServiceStatus', function (status) {
 
 MControl.addHandle('UserInfoResp', function (info) {
 	chatApp.$set(chatApp.nickNameManager[1 - info.userType], info.userId, info.nickName);
-});
+}); 
 
 let colorList = ['#fafac6', '#fae1c6', '#f6dcf6', '#dcdcf6', '#f6f6dc'];
 MControl.addHandle('RecommandKnowledges', function (kl) {
@@ -130,9 +130,10 @@ MControl.addHandle('SearchClientByNameResp',function(resp){
 });
 
 MControl.addHandle('RecommandTags',function(recommand){
-	// console.log("5555555555",recommand.conversationId)
+	console.log("5555555555",recommand.conversationId)
+	console.log("6666666666",conversationList)
 	let conversation = conversationList.find(cco => cco.conversationId == recommand.conversationId);
-	// console.log("99999999999999",conversation)
+	console.log("99999999999999",conversation)
 	let clientId = conversation.userId;
 	let tagList = chatApp.clientDetailManager[clientId].unusedTagList;
 	for(let tag of recommand.tagList){

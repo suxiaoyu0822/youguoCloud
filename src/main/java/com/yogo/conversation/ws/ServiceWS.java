@@ -49,14 +49,15 @@ public class ServiceWS implements WebSocket {
 
 	@OnOpen
 	public void onOpen(Session session){
-		System.out.println("客服握哈手");
+		System.out.println("客服与websocket握哈手");
 		this.session = session;
 		wsVector.add(this);
 	}
 
 	@OnMessage
 	public void onMessage(String msgString){
-		System.out.println("收到消息" + msgString);
+		System.out.println("###################客服端websoket#####################");
+		System.out.println("新收到的消息：" + msgString);
 		try {
 			resolverFactory.doAction(msgString, this);
 		}catch (Exception e){

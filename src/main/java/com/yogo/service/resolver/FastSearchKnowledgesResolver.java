@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
+ * 快速搜索知识解析程序
  * Created by Administrator on 2017/7/18.
  */
 @Service
@@ -28,8 +29,10 @@ public class FastSearchKnowledgesResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("----------------------------快速搜索知识解析程序----------------------------");
         Session session = webSocket.getSession();
         Gson gson = new Gson();
+        System.out.println("接收的消息："+msgJson);
         Type objectType = new TypeToken<Message<FastSearchKnowledges>>(){}.getType();
         Message<FastSearchKnowledges> message = gson.fromJson(msgJson,objectType);
         FastSearchKnowledges fastSearchKnowledges = message.getContent();

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 客户端请求详细信息解析程序
  * Created by Administrator on 2017/7/15.
  */
 @Service
@@ -35,12 +36,14 @@ public class ClientDetailReqResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket){
+        System.out.println("----------------------------客户端请求详细信息解析程序----------------------------");
         Session session = webSocket.getSession();
         Gson gson = new Gson();
         Type objectType = new TypeToken<Message<ClientDetailReq>>(){}.getType();
+        System.out.println("接收的消息:"+msgJson);
         Message<ClientDetailReq> message = gson.fromJson(msgJson,objectType);
         ClientDetailReq clientDetailReq = message.getContent();
-        System.out.println(clientDetailReq.toString());
+        System.out.println("ClientDetailReq:"+clientDetailReq.toString());
         int clientId = clientDetailReq.getClientId();
         Client client = clientService.selectClientByClientId(clientId);
         String clientName = client.getName();

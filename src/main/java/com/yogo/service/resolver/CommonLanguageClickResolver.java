@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Type;
 
 /**
+ * 通用语言触发解析程序
  * Created by Administrator on 2017/7/24.
  */
 @Service
@@ -23,6 +24,7 @@ public class CommonLanguageClickResolver implements ContentResolver {
 
     @Transactional
     public void resolve(String msgJson, WebSocket webSocket) {
+        System.out.println("----------------------------通用语言触发解析程序----------------------------");
         Gson gson = new Gson();
         Type objectType = new TypeToken<Message<CommonLanguageClick>>(){}.getType();
         Message<CommonLanguageClick> message = gson.fromJson(msgJson,objectType);
